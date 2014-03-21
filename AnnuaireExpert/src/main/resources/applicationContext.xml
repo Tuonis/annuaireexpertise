@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+	<!-- Initialisation des DAO -->
+
+	<bean id="genericDAO" class="com.annuaire.dao.GenericDAOImpl"
+		abstract="true">
+	</bean>
+
+	<bean id="expertDAO" class="com.annuaire.dao.ExpertDAOImpl" scope="singleton"
+		lazy-init="true" abstract="false" parent="genericDAO">
+	</bean>
+	
+	 <bean id="expertService"
+         class="com.annuaire.service.ExpertService" 
+         scope="singleton"
+         lazy-init="true">
+        <property name="expertDAO">
+            <ref bean="expertDAO" />
+        </property>
+    </bean>
+
+</beans>
